@@ -1,4 +1,9 @@
-export type SearchType = "user" | "repo";
+export enum SearchTypes {
+  USERS = "users",
+  REPOSITORIES = "repositories",
+}
+
+export type SearchType = SearchTypes;
 
 export interface ISearchUser {
   login: string;

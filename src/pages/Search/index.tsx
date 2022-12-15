@@ -10,6 +10,7 @@ import { ROUTE } from "@routes/Root";
 import { useHistoryStore } from "@store/useHistoryStore";
 import { useSearchStore } from "@store/useSearchStore";
 import { IHistoryItem } from "@tps/history";
+import { SearchTypes } from "@tps/search";
 import { FC, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import "twin.macro";
@@ -21,6 +22,7 @@ const Search: FC = () => {
 
   const { setHistoryList } = useHistoryStore();
   const { query, setQuery } = useSearchStore();
+  const { type, setType } = useSearchStore();
 
   const [searchValue, setSearchValue] = useState<string>(q ?? "");
 
@@ -46,7 +48,7 @@ const Search: FC = () => {
       id: uuidv4(),
       query,
       created_at: Date.now(),
-      type: "user",
+      type: SearchTypes.USERS,
     };
 
     setHistoryList(request);
@@ -71,7 +73,12 @@ const Search: FC = () => {
 
         <Container>
           <Background>
-            <SearchInput setSearchValue={setSearchValue} onSubmit={search} />
+            <SearchInput
+              type={type}
+              setType={setType}
+              setSearchValue={setSearchValue}
+              onSubmit={search}
+            />
 
             {isFetching && !isFetchingNextPage ? (
               <SpinnerContainer>
