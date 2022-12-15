@@ -1,0 +1,54 @@
+{
+  "name": "github-explorer",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "babelMacros": {
+    "twin": {
+      "preset": "styled-components"
+    }
+  },
+  "homepage": "https://bikbaevfr.github.io/github-explorer/",
+  "dependencies": {
+    "@tanstack/react-query": "^4.19.1",
+    "@tanstack/react-query-devtools": "^4.19.1",
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.2.0",
+    "classnames": "^2.3.2",
+    "date-fns": "^2.29.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.4",
+    "styled-components": "^5.3.6",
+    "uuid": "^9.0.0",
+    "vite-plugin-svgr": "^2.2.2",
+    "zustand": "^4.1.4"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
+    "@types/node": "^18.11.9",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "@types/styled-components": "^5.1.26",
+    "@types/uuid": "^9.0.0",
+    "@vitejs/plugin-react": "^2.2.0",
+    "autoprefixer": "^10.4.13",
+    "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-styled-components": "^2.0.7",
+    "concurrently": "^7.6.0",
+    "postcss": "^8.4.19",
+    "postcss-import": "^15.0.1",
+    "prettier": "^2.8.0",
+    "prettier-plugin-tailwindcss": "^0.2.0",
+    "sass": "^1.56.1",
+    "tailwindcss": "^3.2.4",
+    "twin.macro": "^3.0.1",
+    "typescript": "^4.6.4",
+    "vite": "^3.2.3"
+  }
+}
