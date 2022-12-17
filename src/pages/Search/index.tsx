@@ -3,28 +3,25 @@ import SearchInput from "@components/SearchInput";
 import SearchList from "@components/SearchList";
 import Spinner from "@components/Spinner";
 import { useSearch } from "@hooks/useFetch";
+import { useQueryParams } from "@hooks/useQueryParams";
+import { useSaveSearchHistory } from "@hooks/useSaveSearchHistory";
 import ScrollToTop from "@layouts/ScrollToTop";
 import Wrapper from "@layouts/Wrapper";
 import { Background, Container, SpinnerContainer } from "@pages/Search/styles";
 import { ROUTE } from "@routes/Root";
-import { useHistoryStore } from "@store/useHistoryStore";
 import { useSearchStore } from "@store/useSearchStore";
-import { IHistoryItem } from "@tps/history";
-import { SearchTypes } from "@tps/search";
-import { FC, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { SearchType } from "@tps/search";
+import { FC, useState } from "react";
 import "twin.macro";
-import { v4 as uuidv4 } from "uuid";
 
 const Search: FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const q = searchParams.get("q");
+  const [deleteParams] = useQueryParams();
 
-  const { setHistoryList } = useHistoryStore();
   const { query, setQuery } = useSearchStore();
   const { type, setType } = useSearchStore();
 
-  const [searchValue, setSearchValue] = useState<string>(q ?? "");
+  const [searchValue, setSearchValue] = useState<string>(query);
+  const [searchType, setSearchType] = useState<SearchType>(type);
 
   const {
     searchList,
@@ -33,37 +30,15 @@ const Search: FC = () => {
     fetchNextPage,
     hasNextPage,
     isFetching,
-    enable,
-  } = useSearch(query);
-
-  useEffect(() => {
-    if (q) {
-      setQuery(q);
-      enable();
-    }
-  }, []);
-
-  const saveSearchRequest = (query: string): void => {
-    const request: IHistoryItem = {
-      id: uuidv4(),
-      query,
-      created_at: Date.now(),
-      type: SearchTypes.USERS,
-    };
-
-    setHistoryList(request);
-  };
+  } = useSearch(query, type);
+  const [saveSearchHistory] = useSaveSearchHistory();
 
   const search = (): void => {
     setQuery(searchValue);
-    enable();
+    setType(searchType);
 
-    saveSearchRequest(searchValue);
-
-    if (q) {
-      searchParams.delete("q");
-      setSearchParams(searchParams);
-    }
+    saveSearchHistory(searchValue, searchType);
+    deleteParams();
   };
 
   return (
@@ -74,8 +49,8 @@ const Search: FC = () => {
         <Container>
           <Background>
             <SearchInput
-              type={type}
-              setType={setType}
+              type={searchType}
+              setType={setSearchType}
               setSearchValue={setSearchValue}
               onSubmit={search}
             />
@@ -92,6 +67,7 @@ const Search: FC = () => {
                 hasNextPage={hasNextPage}
                 isSuccess={isSuccess}
                 query={query}
+                type={type}
               />
             )}
           </Background>

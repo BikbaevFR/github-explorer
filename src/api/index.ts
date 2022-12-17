@@ -1,14 +1,17 @@
 import $axios from "@api/axios.config";
 import { REPOS_PER_PAGE, SEARCH_PER_PAGE } from "@api/constants";
 import { IRepo } from "@tps/repos";
-import { ISearchUser } from "@tps/search";
+import { SearchResponse, SearchType } from "@tps/search";
 import { IUserInfo } from "@tps/user";
 
 export const fetchSearch = async (
   page: number,
-  q: string
-): Promise<ISearchUser[]> => {
-  const response = await $axios.get(`search/users`, {
+  q: string,
+  type: SearchType
+): Promise<SearchResponse[]> => {
+  const url = `search/${type}`;
+
+  const response = await $axios.get(url, {
     params: { q, per_page: SEARCH_PER_PAGE, page },
   });
   return response.data.items;

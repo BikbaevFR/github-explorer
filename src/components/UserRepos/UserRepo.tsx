@@ -20,7 +20,7 @@ const UserRepo: FC<Props> = ({ repo }) => {
   return (
     <RepoContainer>
       <RepoNameContainer>
-        <RepoNameLink to={`/repo/${repo.id}`}>
+        <RepoNameLink to={`/repo/${repo.full_name}`}>
           <h3>{repo.name}</h3>
         </RepoNameLink>
       </RepoNameContainer>

@@ -53,10 +53,7 @@ const SearchSelect: FC<Props> = ({ selectedType, setType }) => {
 
   return (
     <Container ref={containerRef}>
-      <Field
-        whileTap={{ scale: 0.97 }}
-        onClick={() => setIsOpen((prev) => !prev)}
-      >
+      <Field onClick={() => setIsOpen((prev) => !prev)}>
         <FieldText>{selectedType}</FieldText>
 
         <IconContainer

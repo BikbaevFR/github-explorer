@@ -2,7 +2,7 @@ import Header from "@components/Header";
 import HistoryList from "@components/HistoryList";
 import ScrollToTop from "@layouts/ScrollToTop";
 import Wrapper from "@layouts/Wrapper";
-import { Background, Container, SearchLink, Text } from "@pages/HIstory/styles";
+import { Background, Container, SearchLink, Text } from "@pages/History/styles";
 import { ROUTE } from "@routes/Root";
 import { useHistoryStore } from "@store/useHistoryStore";
 import { FC } from "react";
