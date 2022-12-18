@@ -11,6 +11,7 @@ import {
   Section,
   SpinnerContainer,
 } from "@components/UserInfo/styles";
+import { ReactComponent as RepoSVG } from "@static/img/repo.svg";
 import { IUserInfo } from "@tps/user";
 import { FC } from "react";
 import "twin.macro";
@@ -52,7 +53,9 @@ const UserInfo: FC<Props> = ({ userInfo, isLoading }) => {
 
           <InfoRowContainer>
             <InfoRowIconContainer>
-              <InfoRowIcon prop="folder" />
+              <div>
+                <RepoSVG />
+              </div>
             </InfoRowIconContainer>
             {userInfo?.public_repos} repos
           </InfoRowContainer>

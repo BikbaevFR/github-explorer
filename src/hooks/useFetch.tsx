@@ -1,24 +1,33 @@
 import { REPOS_PER_PAGE, SEARCH_PER_PAGE } from "@api/constants";
-import { fetchRepositories, fetchSearch, fetchUserInfo } from "@api/index";
+import {
+  fetchRepoInfo,
+  fetchRepositories,
+  fetchSearch,
+  fetchUserInfo,
+} from "@api/index";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { IRepo } from "@tps/repos";
-import { ISearchUser } from "@tps/search";
-import { IUserInfo } from "@tps/user";
+import { IRepoInfo } from "@tps/repo";
+import { SearchResponse, SearchType } from "@tps/search";
+import { IUserInfo, IUserRepo } from "@tps/user";
 import { uniq } from "@utils/index";
-import { useState } from "react";
 
-export const useSearch = (query: string): any => {
-  const [enabled, setEnabled] = useState<boolean>(false);
-
-  const searchQuery = useInfiniteQuery(
-    ["search", query],
-    ({ pageParam = 1 }) => fetchSearch(pageParam, query),
+export const useSearch = (query: string, type: SearchType): any => {
+  const {
+    data,
+    isSuccess,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+  } = useInfiniteQuery(
+    ["search", { query, type }],
+    ({ pageParam = 1 }) => fetchSearch(pageParam, query, type),
     {
-      enabled,
+      enabled: Boolean(query),
       keepPreviousData: true,
       getNextPageParam: (
-        lastPage: ISearchUser[],
-        allPages: Array<ISearchUser[]>
+        lastPage: SearchResponse[],
+        allPages: Array<SearchResponse[]>
       ) =>
         lastPage.length === SEARCH_PER_PAGE ? allPages.length + 1 : undefined,
       staleTime: 60000,
@@ -29,17 +38,6 @@ export const useSearch = (query: string): any => {
     }
   );
 
-  const enable = () => setEnabled(true);
-
-  const {
-    data,
-    isSuccess,
-    isFetchingNextPage,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-  } = searchQuery;
-
   return {
     searchList: data?.pages,
     isSuccess,
@@ -47,15 +45,18 @@ export const useSearch = (query: string): any => {
     fetchNextPage,
     hasNextPage,
     isFetching,
-    enable,
   };
 };
 
 export const useUserInfo = (
   login: string | undefined
 ): [IUserInfo | null, boolean] => {
-  const { data, isLoading } = useQuery(["userInfo"], () =>
-    fetchUserInfo(login)
+  const { data, isLoading } = useQuery(
+    ["userInfo", login],
+    () => fetchUserInfo(login),
+    {
+      staleTime: 60000,
+    }
   );
 
   const userInfo = data ?? null;
@@ -63,7 +64,23 @@ export const useUserInfo = (
   return [userInfo, isLoading];
 };
 
-export const useRepos = (login: string | undefined): any => {
+export const useRepoInfo = (
+  login: string | undefined,
+  name: string | undefined
+): [IRepoInfo | null, boolean] => {
+  const { data, isLoading } = useQuery(
+    ["repoInfo", { login, name }],
+    () => fetchRepoInfo(login, name),
+    {
+      staleTime: 60000,
+    }
+  );
+
+  const repoInfo = data ?? null;
+  return [repoInfo, isLoading];
+};
+
+export const useUserRepos = (login: string | undefined): any => {
   const {
     data,
     isLoading: isLoadingRepos,
@@ -71,10 +88,11 @@ export const useRepos = (login: string | undefined): any => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery(
-    ["repos"],
+    ["repos", login],
     ({ pageParam = 1 }) => fetchRepositories(pageParam, login),
     {
-      getNextPageParam: (lastPage: IRepo[], allPages: Array<IRepo[]>) =>
+      staleTime: 60000,
+      getNextPageParam: (lastPage: IUserRepo[], allPages: Array<IUserRepo[]>) =>
         lastPage.length === REPOS_PER_PAGE ? allPages.length + 1 : undefined,
     }
   );

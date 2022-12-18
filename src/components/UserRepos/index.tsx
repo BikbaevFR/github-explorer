@@ -9,13 +9,13 @@ import {
   ShowMoreContainer,
   SpinnerContainer,
 } from "@components/UserRepos/styles";
-import { IRepo } from "@tps/repos";
+import { IUserRepo } from "@tps/user";
 import { FC } from "react";
 import "twin.macro";
 
 interface Props {
   login: string | undefined;
-  repos: IRepo[];
+  repos: IUserRepo[];
   onShowMoreClick: () => void;
   hasNextPage: boolean | undefined;
   isLoading: boolean;

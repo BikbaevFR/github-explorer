@@ -1,5 +1,5 @@
 import Avatar from "@components/Avatar";
-import { Container, ItemLink, Text } from "@components/SearchItem/styles";
+import { Container, ItemLink, Text } from "@components/SearchUser/styles";
 import { ISearchUser } from "@tps/search";
 import { FC } from "react";
 import "twin.macro";
@@ -8,7 +8,7 @@ interface Props {
   item: ISearchUser;
 }
 
-const SearchItem: FC<Props> = ({ item }) => {
+const SearchUser: FC<Props> = ({ item }) => {
   return (
     <Container>
       <ItemLink to={`/user/${item.login}`}>
@@ -20,4 +20,4 @@ const SearchItem: FC<Props> = ({ item }) => {
   );
 };
 
-export default SearchItem;
+export default SearchUser;

@@ -1,7 +1,7 @@
 import Header from "@components/Header";
 import UserInfo from "@components/UserInfo";
 import UserRepos from "@components/UserRepos";
-import { useRepos, useUserInfo } from "@hooks/useFetch";
+import { useUserInfo, useUserRepos } from "@hooks/useFetch";
 import ScrollToTop from "@layouts/ScrollToTop";
 import Wrapper from "@layouts/Wrapper";
 import { Background, Container } from "@pages/UserProfile/styles";
@@ -19,7 +19,7 @@ const UserProfile = () => {
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
-  } = useRepos(login);
+  } = useUserRepos(login);
 
   return (
     <ScrollToTop>

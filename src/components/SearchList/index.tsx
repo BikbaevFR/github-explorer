@@ -1,4 +1,3 @@
-import SearchItem from "@components/SearchItem";
 import {
   ButtonWrap,
   Container,
@@ -6,18 +5,26 @@ import {
   NotFound,
   NotFoundMark,
 } from "@components/SearchList/styles";
+import SearchRepo from "@components/SearchRepo";
+import SearchUser from "@components/SearchUser";
 import ShowMore from "@components/ShowMore";
-import { ISearchUser } from "@tps/search";
+import { SearchResponse, SearchType, SearchTypes } from "@tps/search";
 import { FC } from "react";
 import "twin.macro";
 
+const searchItems = {
+  [SearchTypes.USERS]: SearchUser,
+  [SearchTypes.REPOSITORIES]: SearchRepo,
+};
+
 interface Props {
-  list: ISearchUser[];
+  list: SearchResponse[];
   isLoading: boolean;
   isSuccess: boolean;
   hasNextPage: boolean;
   query: string;
   onShowMoreClick: () => void;
+  type: SearchType;
 }
 
 const SearchList: FC<Props> = ({
@@ -27,7 +34,10 @@ const SearchList: FC<Props> = ({
   onShowMoreClick,
   hasNextPage,
   query,
+  type,
 }) => {
+  const Item = searchItems[type];
+
   return (
     <>
       {isSuccess ? (
@@ -40,9 +50,9 @@ const SearchList: FC<Props> = ({
           ) : null}
 
           {list.length ? (
-            <List>
+            <List type={type}>
               {list.map((item) => (
-                <SearchItem key={item.id} item={item} />
+                <Item key={item.id} item={item} />
               ))}
             </List>
           ) : null}
