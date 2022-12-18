@@ -20,7 +20,7 @@ const InfoRow = tw.div`text-lg mb-2`;
 
 const Language = styled(InfoRow)(tw`text-red-500`);
 
-const Counts = styled(InfoRow)(tw`flex items-center`);
+const Counts = styled(InfoRow)(tw`flex flex-wrap items-center`);
 
 const Count = tw.div`flex items-center text-sm text-indigo-500 mr-3 mb-1 border border-indigo-500 rounded-md py-1 px-2`;
 
