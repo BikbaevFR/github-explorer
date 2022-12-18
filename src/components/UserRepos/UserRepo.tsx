@@ -7,13 +7,13 @@ import {
   RepoNameContainer,
   RepoNameLink,
 } from "@components/UserRepos/styles";
-import { IRepo } from "@tps/repos";
+import { IUserRepo } from "@tps/user";
 import { format } from "date-fns";
 import { FC } from "react";
 import "twin.macro";
 
 interface Props {
-  repo: IRepo;
+  repo: IUserRepo;
 }
 
 const UserRepo: FC<Props> = ({ repo }) => {

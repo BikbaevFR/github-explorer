@@ -13,7 +13,7 @@ import {
 } from "@components/SearchRepo/styles";
 import { ReactComponent as StarSVG } from "@static/img/star.svg";
 import { ISearchRepo } from "@tps/search";
-import { formatStarCount } from "@utils/index";
+import { formatCount } from "@utils/index";
 import { format } from "date-fns";
 import { FC } from "react";
 
@@ -44,7 +44,7 @@ const SearchRepo: FC<Props> = ({ item }) => {
             <StarIconContainer>
               <StarSVG />
             </StarIconContainer>
-            {formatStarCount(item.stargazers_count)}
+            {formatCount(item.stargazers_count)}
           </StarCount>
         ) : null}
 

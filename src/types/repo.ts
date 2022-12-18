@@ -1,83 +1,6 @@
-export enum SearchTypes {
-  USERS = "users",
-  REPOSITORIES = "repositories",
-}
+import { ILicense, IOrganization, IOwner } from "@tps/search";
 
-export type SearchType = SearchTypes;
-
-export interface ISearchUser {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-  score: number;
-}
-
-export interface IOwner {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-}
-
-export interface ILicense {
-  key: string;
-  name: string;
-  spdx_id: string;
-  url?: any;
-  node_id: string;
-}
-
-export interface IOrganization {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
-  url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
-  site_admin: boolean;
-}
-
-export interface ISearchRepo {
+export interface IRepoInfo {
   id: number;
   node_id: string;
   name: string;
@@ -151,13 +74,14 @@ export interface ISearchRepo {
   allow_forking: boolean;
   is_template: boolean;
   web_commit_signoff_required: boolean;
-  topics: string[];
+  topics: any[];
   visibility: string;
   forks: number;
   open_issues: number;
   watchers: number;
   default_branch: string;
-  score: number;
+  temp_clone_token?: any;
+  organization: IOrganization;
+  network_count: number;
+  subscribers_count: number;
 }
-
-export type SearchResponse = ISearchUser & ISearchRepo;

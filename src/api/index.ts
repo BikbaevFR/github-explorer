@@ -1,8 +1,8 @@
 import $axios from "@api/axios.config";
 import { REPOS_PER_PAGE, SEARCH_PER_PAGE } from "@api/constants";
-import { IRepo } from "@tps/repos";
+import { IRepoInfo } from "@tps/repo";
 import { SearchResponse, SearchType } from "@tps/search";
-import { IUserInfo } from "@tps/user";
+import { IUserInfo, IUserRepo } from "@tps/user";
 
 export const fetchSearch = async (
   page: number,
@@ -26,10 +26,20 @@ export const fetchUserInfo = async (
   return response.data;
 };
 
+export const fetchRepoInfo = async (
+  login: string | undefined,
+  name: string | undefined
+): Promise<IRepoInfo> => {
+  const baseUrl = `/repos/${login}/${name}`;
+
+  const response = await $axios.get(baseUrl);
+  return response.data;
+};
+
 export const fetchRepositories = async (
   page: number,
   login: string | undefined
-): Promise<IRepo[]> => {
+): Promise<IUserRepo[]> => {
   const baseUrl = `/users/${login}/repos`;
 
   const response = await $axios.get(baseUrl, {

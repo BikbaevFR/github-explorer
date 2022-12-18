@@ -7,8 +7,9 @@ export const uniq = <
   prop: string = "id"
 ): T[] => [...new Map(array.map((item) => [item[prop], item])).values()];
 
-export const formatStarCount = (count: number): string => {
-  if (count < 1000) return String(count);
+export const formatCount = (count?: number): string | number => {
+  if (!count) return 0;
+  if (count < 1000) return count;
 
   return `${(count / 1000).toFixed(1)}k`;
 };

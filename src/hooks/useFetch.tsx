@@ -1,9 +1,14 @@
 import { REPOS_PER_PAGE, SEARCH_PER_PAGE } from "@api/constants";
-import { fetchRepositories, fetchSearch, fetchUserInfo } from "@api/index";
+import {
+  fetchRepoInfo,
+  fetchRepositories,
+  fetchSearch,
+  fetchUserInfo,
+} from "@api/index";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { IRepo } from "@tps/repos";
+import { IRepoInfo } from "@tps/repo";
 import { SearchResponse, SearchType } from "@tps/search";
-import { IUserInfo } from "@tps/user";
+import { IUserInfo, IUserRepo } from "@tps/user";
 import { uniq } from "@utils/index";
 
 export const useSearch = (query: string, type: SearchType): any => {
@@ -59,7 +64,23 @@ export const useUserInfo = (
   return [userInfo, isLoading];
 };
 
-export const useRepos = (login: string | undefined): any => {
+export const useRepoInfo = (
+  login: string | undefined,
+  name: string | undefined
+): [IRepoInfo | null, boolean] => {
+  const { data, isLoading } = useQuery(
+    ["repoInfo", { login, name }],
+    () => fetchRepoInfo(login, name),
+    {
+      staleTime: 60000,
+    }
+  );
+
+  const repoInfo = data ?? null;
+  return [repoInfo, isLoading];
+};
+
+export const useUserRepos = (login: string | undefined): any => {
   const {
     data,
     isLoading: isLoadingRepos,
@@ -71,7 +92,7 @@ export const useRepos = (login: string | undefined): any => {
     ({ pageParam = 1 }) => fetchRepositories(pageParam, login),
     {
       staleTime: 60000,
-      getNextPageParam: (lastPage: IRepo[], allPages: Array<IRepo[]>) =>
+      getNextPageParam: (lastPage: IUserRepo[], allPages: Array<IUserRepo[]>) =>
         lastPage.length === REPOS_PER_PAGE ? allPages.length + 1 : undefined,
     }
   );

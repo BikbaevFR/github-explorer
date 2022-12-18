@@ -8,7 +8,7 @@ export enum ROUTE {
   SEARCH = "/",
   HISTORY = "/history",
   USER_PROFILE = "/user/:login",
-  REPO = "/repo/:login/:repoNam",
+  REPO = "/repo/:login/:repoName",
 }
 
 const Root = () => {
