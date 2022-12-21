@@ -13,7 +13,7 @@
       "preset": "styled-components"
     }
   },
-  "homepage": "https://bikbaevfr.github.io/github-explorer/",
+  "homepage": "https://fyargat.github.io/github-explorer/",
   "dependencies": {
     "@tanstack/react-query": "^4.19.1",
     "@tanstack/react-query-devtools": "^4.19.1",

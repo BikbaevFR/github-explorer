@@ -2,4 +2,4 @@
 
 ## Page
 
-🔗 [https://bikbaevfr.github.io/github-explorer/](https://bikbaevfr.github.io/github-explorer/)
+🔗 [https://fyargat.github.io/github-explorer/](https://fyargat.github.io/github-explorer/)
